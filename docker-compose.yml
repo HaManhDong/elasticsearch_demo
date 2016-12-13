@@ -1,0 +1,41 @@
+#
+# syntax: https://docs.docker.com/compose/yml/
+#
+version: "2"
+
+services:
+  elastic_search:
+    image: elasticsearch:2.3
+    ports:
+      - "9200:9200"
+    volumes:
+      - ./els_data:/usr/share/elasticsearch/data
+    networks:
+      - inter-back
+    hostname: elasticsearch
+    domainname: coclab.lan
+    cpu_shares: 512             # 0.5 CPU
+    mem_limit: 1036870912        # 1 G RAM
+    #privileged: true
+    # restart: always
+    #stdin_open: true
+    tty: true
+
+  api:
+    image: huanphan/search_easy:0.5
+    networks:
+      - inter-back
+    ports:
+      - "8000:8000"
+    # volumes:
+    #     - ./search_api:/usr/src/app
+    env_file: docker-env
+    # environment:
+    #     DJANGO_SETTINGS_MODULE: 'config.settings.local'
+    cpu_shares: 512             # 0.5 CPU
+    mem_limit: 1036870912        # 1 G RAM
+    links:
+      - elastic_search:es_db
+    
+networks:
+    inter-back:

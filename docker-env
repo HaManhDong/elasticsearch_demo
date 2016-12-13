@@ -1,0 +1,2 @@
+ES_HOST=es_db
+ES_PORT=9200
