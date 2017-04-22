@@ -19,5 +19,5 @@ from django.conf.urls import include, url
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^search', include('api.urls', namespace='search')),
+    url(r'^search/', include('api.urls', namespace='search')),
 ]

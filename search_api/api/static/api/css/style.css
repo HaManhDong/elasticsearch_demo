@@ -1,0 +1,58 @@
+.header {
+    margin: 10px 0 0 0;
+    padding: 10px;
+    background-color: gainsboro;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+img {
+    max-width: 100%;
+    max-height: 100%;
+    margin-top: 15px;
+}
+
+#btnSearch {
+    margin-top: 20px;
+}
+
+#checkBoxFullTextSearch {
+    margin-right: 10px;
+}
+
+.btn-tool{
+    float: right !important;
+    background-color: gainsboro !important;
+}
+
+.content {
+    margin: 20px 0 20px 0;
+    display: block;
+}
+
+.search_option {
+    /*border: none;*/
+    background-color: gainsboro;
+}
+
+cite {
+    color: #006621;
+}
+
+.time_up{
+    color: #808080;
+}
+
+.footer-copyright{
+    background-color: #333333;
+    padding-top: 5px;
+    padding-bottom: 3px;
+    text-align: center;
+}
+
+.footer-copyright p{
+    color: #ccc;
+}
+

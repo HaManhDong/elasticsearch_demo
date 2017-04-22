@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Elastic Search</title>
+    <link rel="stylesheet" href="{% static 'api/lib/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'api/css/style.css' %}">
+    <script type="application/javascript" src="{% static 'api/lib/js/angular.min.js' %}"></script>
+    <script type="application/javascript" src="{% static 'api/lib/js/angular-resource.min.js' %}"></script>
+    <script type="application/javascript" src="{% static 'api/lib/js/angular-sanitize.js' %}"></script>
+    <script type="application/javascript" src="{% static 'api/lib/js/jquery-3.2.0.min.js' %}"></script>
+</head>
+<body ng-app="elasticSeachUI" ng-controller="elasticSearchCtrl as vm">
+<div class="container">
+    <div class="header">
+        <div class="row">
+            <div class="col-md-2">
+                <img src="{% static 'api/images/elasticsearch.png' %}">
+            </div>
+            <div class="col-md-6" style="padding-top: 20px">
+                <input id="search" type="text" class="form-control" ng-model="vm.search_text">
+                <!--<br/>-->
+                <!--<input type="checkbox" id="checkBoxFullTextSearch"> <span>Tìm theo đoạn</span>-->
+                <button class="btn btn-link btn-tool" ng-click="vm.actionShowToolSearch()">Công cụ</button>
+            </div>
+            <div class="col-md-1">
+                <button type="button" class="btn btn-info" id="btnSearch" ng-click="vm.search()">
+                    <span class="glyphicon-search"></span> Search
+                </button>
+            </div>
+
+        </div>
+        <div class="row tool-search" ng-show="vm.showToolSearch">
+            <div class="col-md-2"></div>
+            <div class="col-md-2">
+                <select class="form-control search_option" name="singleSelect"
+                        ng-options="option.name for option in vm.typeSearches.availableOptions track by option.id"
+                        ng-model="vm.typeSearches.selectedOption" ng-change="vm.search()">
+                    <!--<option value="1">Full text search</option>-->
+                    <!--<option value="2">Title</option>-->
+                    <!--<option value="3">Content</option>-->
+                </select>
+            </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-2">
+                <select class="form-control search_option" name="singleSelect"
+                        ng-options="option.name for option in vm.timeFilters.availableOptions track by option.id"
+                        ng-model="vm.timeFilters.selectedOption" ng-change="vm.changeTimeFilter()">
+                    <!--<option value="1">All time</option>-->
+                    <!--<option value="2">1 week</option>-->
+                    <!--<option value="3">1 month</option>-->
+                    <!--<option value="4">1 year</option>-->
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="content row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <div ng-show="vm.show_result">
+                <!--<p>Kết quả cho từ khóa "<span id="resultShow"></span>"</p>-->
+                <p>Kết quả cho từ khóa "<strong>{d vm.search_text d}</strong>" </p>
+                <hr/>
+            </div>
+            <div ng-show="vm.noResult">
+                <!--<p>Kết quả cho từ khóa "<span id="resultShow"></span>"</p>-->
+                <p>No result!</p>
+            </div>
+            <div class="result">
+                <div ng-repeat="result in vm.data track by $index">
+                    <h3>
+                        <a href="{d result.url d}">{d result.title d}</a>
+                    </h3>
+                    <div>
+                        <div style="white-space:nowrap">
+                            <cite>{d result.url d}</cite>
+                        </div>
+                        <span class="st">
+                           <!--{d result.highlight.content[0] d}-->
+                            <!--{d result.highlightText d}-->
+                            <span class="time_up">{d result.time d}</span> -
+                            <span ng-bind-html="result.highlightText"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class=" page_pagination row" ng-show="vm.showPagePagination">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li>
+                        <a href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="active"><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                    <li>
+                        <a href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <div class="footer-copyright row" ng-show="vm.showPagePagination">
+        <p>© 2017 Copyright Text </p>
+    </div>
+</div>
+<script src="{%static 'api/js/js.js' %}"></script>
+</body>
+</html>
