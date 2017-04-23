@@ -40,7 +40,7 @@ app.controller('elasticSearchCtrl', function ($scope, RequestService) {
             {id: 1, name: 'Title'},
             {id: 2, name: 'Content'}
         ],
-        selectedOption: {id: '1', name: 'Full text search'}
+        selectedOption: {id: 0, name: 'Full text search'}
     };
 
     vm.timeFilters = {
@@ -50,7 +50,7 @@ app.controller('elasticSearchCtrl', function ($scope, RequestService) {
             {id: 2, name: '1 month ago'},
             {id: 3, name: '1 year ago'}
         ],
-        selectedOption: {id: '1', name: 'All time'}
+        selectedOption: {id: 0, name: 'All time'}
     };
 
     document.getElementById('search').onkeypress = function (e) {
@@ -62,9 +62,34 @@ app.controller('elasticSearchCtrl', function ($scope, RequestService) {
         }
     };
 
+    function getTimeFilter() {
+        var date = new Date();
+        switch (vm.timeFilters.selectedOption.id) {
+            case 1:
+                date.setDate(date.getDate() - 7);
+                break;
+            case 2:
+                date.setMonth(date.getMonth() - 1);
+                break;
+            case 3:
+                date.setFullYear(date.getFullYear() - 1);
+                break;
+            default:
+                return '';
+        }
+        var month_Temp = '';
+        if(date.getMonth() < 9){
+            month_Temp = '0' + (date.getMonth() + 1);
+        } else {
+            month_Temp = date.getMonth() + 1;
+        }
+        var date_string = date.getFullYear() + "-" +month_Temp + "-" + date.getDate();
+        return date_string;
+    };
+
     vm.data = [];
 
-    var count = 2;
+    var count = 1;
     vm.actionShowToolSearch = function () {
         if (count % 2) {
             vm.showToolSearch = true;
@@ -96,9 +121,15 @@ app.controller('elasticSearchCtrl', function ($scope, RequestService) {
             return;
         }
 
+        var timeFilter = '';
+        if(vm.timeFilters.selectedOption.id != 0){
+            timeFilter = getTimeFilter();
+        }
+
         RequestService.get({
             "q": vm.search_text,
             "fieldID": vm.typeSearches.selectedOption['id'],
+            'timeFilter': timeFilter,
             "match_phrase": true
         }).$promise.then(function (result) {
             // console.log(result);
@@ -122,14 +153,6 @@ app.controller('elasticSearchCtrl', function ($scope, RequestService) {
             alert("Can't search!");
             console.log(errResponse);
         });
-    };
-
-    vm.changeTypeSearch = function () {
-        console.log(vm.typeSearches.selectedOption);
-    };
-
-    vm.changeTimeFilter = function () {
-        console.log(vm.timeFilters.selectedOption);
     };
 
 });

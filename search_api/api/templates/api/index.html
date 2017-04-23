@@ -20,8 +20,6 @@
             </div>
             <div class="col-md-6" style="padding-top: 20px">
                 <input id="search" type="text" class="form-control" ng-model="vm.search_text">
-                <!--<br/>-->
-                <!--<input type="checkbox" id="checkBoxFullTextSearch"> <span>Tìm theo đoạn</span>-->
                 <button class="btn btn-link btn-tool" ng-click="vm.actionShowToolSearch()">Công cụ</button>
             </div>
             <div class="col-md-1">
@@ -46,7 +44,7 @@
             <div class="col-md-2">
                 <select class="form-control search_option" name="singleSelect"
                         ng-options="option.name for option in vm.timeFilters.availableOptions track by option.id"
-                        ng-model="vm.timeFilters.selectedOption" ng-change="vm.changeTimeFilter()">
+                        ng-model="vm.timeFilters.selectedOption" ng-change="vm.search()">
                     <!--<option value="1">All time</option>-->
                     <!--<option value="2">1 week</option>-->
                     <!--<option value="3">1 month</option>-->
