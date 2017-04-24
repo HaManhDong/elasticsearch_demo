@@ -9,6 +9,7 @@ class NewsSearchView(APIView):
     def get(self, request):
         print request
         fields = [['summary', 'title', 'content'],'title','content']
+        # fields = [['title', 'content'],'title','content']
         query = request.GET.get("q", "")
         fieldID = request.GET.get("fieldID", 0)
         fieldID = int(fieldID)
