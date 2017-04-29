@@ -18,10 +18,7 @@ def search_news(query, fields, match_phrase=False, time_filter=''):
             q = MultiMatch(query=query, fields=['content', 'content.std'])
 
     if time_filter:
-        print '***********'
-        print time_filter
         return Search(using=client, index="news").filter('range', time={'gte': time_filter}).highlight('title',
-                                                                                                       'content').query(
-            q)
+                                                                                                       'content').query(q)
 
     return Search(using=client, index="news").highlight('title', 'content').query(q)
