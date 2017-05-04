@@ -13,15 +13,15 @@ def search_news(query, fields, match_phrase=False, time_filter=''):
         if fields == ['summary', 'title', 'content']:
             q = MultiMatch(query=query, fields=['title^3', 'title.std', 'content^2', 'content.std'], type="most_fields")
         elif fields == 'title':
-            q = MultiMatch(query=query, fields=['title', 'title.std'])
+            q = MultiMatch(query=query, fields=['title', 'title.std'], type="most_fields")
         else:
-            q = MultiMatch(query=query, fields=['content', 'content.std'])
+            q = MultiMatch(query=query, fields=['content', 'content.std'], type="most_fields")
 
     if time_filter:
         print '***********'
         print time_filter
-        return Search(using=client, index="news").filter('range', time={'gte': time_filter}).highlight('title',
-                                                                                                       'content').query(
-            q)
+        return Search(using=client, index="news") \
+            .filter('range', time={'gte': time_filter}) \
+            .highlight('title', 'content').query(q)
 
     return Search(using=client, index="news").highlight('title', 'content').query(q)
