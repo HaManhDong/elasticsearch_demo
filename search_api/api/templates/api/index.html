@@ -35,9 +35,6 @@
                 <select class="form-control search_option" name="singleSelect"
                         ng-options="option.name for option in vm.typeSearches.availableOptions track by option.id"
                         ng-model="vm.typeSearches.selectedOption" ng-change="vm.search()">
-                    <!--<option value="1">Full text search</option>-->
-                    <!--<option value="2">Title</option>-->
-                    <!--<option value="3">Content</option>-->
                 </select>
             </div>
             <div class="col-md-1"></div>
@@ -45,10 +42,6 @@
                 <select class="form-control search_option" name="singleSelect"
                         ng-options="option.name for option in vm.timeFilters.availableOptions track by option.id"
                         ng-model="vm.timeFilters.selectedOption" ng-change="vm.search()">
-                    <!--<option value="1">All time</option>-->
-                    <!--<option value="2">1 week</option>-->
-                    <!--<option value="3">1 month</option>-->
-                    <!--<option value="4">1 year</option>-->
                 </select>
             </div>
         </div>
@@ -91,18 +84,18 @@
         <div class="col-md-8">
             <nav aria-label="Page navigation">
                 <ul class="pagination">
-                    <li>
-                        <a href="#" aria-label="Previous">
+                    <li ng-class="{'disabled':vm.page == 1}">
+                        <a href="" aria-label="Previous" ng-click="vm.changePage(0)">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
-                    <li class="active"><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li>
-                        <a href="#" aria-label="Next">
+                    <li ng-class="{'active':vm.page == 1}"><a href="" ng-click="vm.changePage(1)">1</a></li>
+                    <li ng-class="{'active':vm.page == 2}"><a href="" ng-click="vm.changePage(2)">2</a></li>
+                    <li ng-class="{'active':vm.page == 3}"><a href="" ng-click="vm.changePage(3)">3</a></li>
+                    <li ng-class="{'active':vm.page == 4}"><a href="" ng-click="vm.changePage(4)">4</a></li>
+                    <li ng-class="{'active':vm.page == 5}"><a href="" ng-click="vm.changePage(5)">5</a></li>
+                    <li ng-class="{'disabled':vm.page == 5}">
+                        <a href="" aria-label="Next" ng-click="vm.changePage(6)">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>

@@ -29,6 +29,8 @@ angular.module('elasticSeachUI').factory('RequestService', function ($resource) 
 app.controller('elasticSearchCtrl', function ($scope, RequestService) {
     var vm = this;
 
+    vm.a = true;
+    vm.page = 1;
     vm.show_result = false;
     vm.noResult = false;
     vm.showPagePagination = false;
@@ -60,6 +62,35 @@ app.controller('elasticSearchCtrl', function ($scope, RequestService) {
             // Enter pressed
             vm.search();
         }
+    };
+
+    vm.changePage = function(page){
+      if(vm.page == page){
+          console.log('this is concurrent page!');
+          return;
+      }
+      if(page == 0){
+          if(vm.page > 1){
+              vm.page = vm.page -1;
+              //TODO: request to server with new page here...
+              return;
+          } else {
+              return;
+          }
+      }
+      if(page == 6){
+          if(vm.page < 5){
+              vm.page += 1;
+              //TODO: request to server with new page here...
+              return;
+          } else {
+              return;
+          }
+      }
+      vm.page = page;
+      console.log(vm.page);
+      //TODO: request to server with new page here...
+
     };
 
     function getTimeFilter() {
