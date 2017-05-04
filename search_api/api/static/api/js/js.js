@@ -11,6 +11,7 @@ app.config(['$interpolateProvider', function ($interpolateProvider) {
 
 angular.module('elasticSeachUI').factory('RequestService', function ($resource) {
 
+    // var URL = "search";
     var URL = "search";
 
     var header = {
@@ -72,7 +73,7 @@ app.controller('elasticSearchCtrl', function ($scope, RequestService) {
       if(page == 0){
           if(vm.page > 1){
               vm.page = vm.page -1;
-              //TODO: request to server with new page here...
+              vm.search();
               return;
           } else {
               return;
@@ -81,7 +82,7 @@ app.controller('elasticSearchCtrl', function ($scope, RequestService) {
       if(page == 6){
           if(vm.page < 5){
               vm.page += 1;
-              //TODO: request to server with new page here...
+              vm.search();
               return;
           } else {
               return;
@@ -89,7 +90,7 @@ app.controller('elasticSearchCtrl', function ($scope, RequestService) {
       }
       vm.page = page;
       console.log(vm.page);
-      //TODO: request to server with new page here...
+        vm.search();
 
     };
 
@@ -114,7 +115,13 @@ app.controller('elasticSearchCtrl', function ($scope, RequestService) {
         } else {
             month_Temp = date.getMonth() + 1;
         }
-        var date_string = date.getFullYear() + "-" +month_Temp + "-" + date.getDate();
+        var date_Temp = '';
+        if(date.getDate() < 10){
+            date_Temp = '0' + date.getDate();
+        } else {
+            date_Temp = date.getDate();
+        }
+        var date_string = date.getFullYear() + "-" +month_Temp + "-" + date_Temp;
         return date_string;
     };
 
@@ -161,9 +168,10 @@ app.controller('elasticSearchCtrl', function ($scope, RequestService) {
             "q": vm.search_text,
             "fieldID": vm.typeSearches.selectedOption['id'],
             'timeFilter': timeFilter,
+            'page': vm.page,
             "match_phrase": true
         }).$promise.then(function (result) {
-            // console.log(result);
+            console.log(result);
             vm.show_result = true;
             if (result.data.news.length == 0) {
                 vm.noResult = true;
