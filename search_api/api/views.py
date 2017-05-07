@@ -17,7 +17,8 @@ class NewsSearchView(APIView):
         time_filter = request.GET.get('timeFilter', "")
         page = request.GET.get('page', 1)
         match_phrase = request.GET.get("match_phrase", False)
-        if match_phrase == 'True':
+        print match_phrase
+        if match_phrase == 'true':
             match_phrase = True
         else:
             match_phrase = False
