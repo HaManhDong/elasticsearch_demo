@@ -18,7 +18,7 @@
             <div class="col-md-2">
                 <img src="{% static 'api/images/elasticsearch.png' %}">
             </div>
-            <div class="col-md-6" style="padding-top: 20px">
+            <div class="col-md-7" style="padding-top: 20px">
                 <input id="search" type="text" class="form-control" ng-model="vm.search_text">
                 <button class="btn btn-link btn-tool" ng-click="vm.actionShowToolSearch()">Công cụ</button>
             </div>
@@ -31,13 +31,16 @@
         </div>
         <div class="row tool-search" ng-show="vm.showToolSearch">
             <div class="col-md-2"></div>
+            <div class="col-md-2" style="padding-top: 8px;">
+                <input type="checkbox" style="margin: 2px 3px 0 0" ng-model="vm.isMatchPhase"
+                    ng-click="vm.search()"/>Match Phase
+            </div>
             <div class="col-md-2">
                 <select class="form-control search_option" name="singleSelect"
                         ng-options="option.name for option in vm.typeSearches.availableOptions track by option.id"
                         ng-model="vm.typeSearches.selectedOption" ng-change="vm.search()">
                 </select>
             </div>
-            <div class="col-md-1"></div>
             <div class="col-md-2">
                 <select class="form-control search_option" name="singleSelect"
                         ng-options="option.name for option in vm.timeFilters.availableOptions track by option.id"

@@ -36,6 +36,7 @@ app.controller('elasticSearchCtrl', function ($scope, RequestService) {
     vm.noResult = false;
     vm.showPagePagination = false;
     vm.showToolSearch = false;
+    vm.isMatchPhase = true;
 
     vm.typeSearches = {
         availableOptions: [
@@ -169,7 +170,7 @@ app.controller('elasticSearchCtrl', function ($scope, RequestService) {
             "fieldID": vm.typeSearches.selectedOption['id'],
             'timeFilter': timeFilter,
             'page': vm.page,
-            "match_phrase": true
+            "match_phrase": vm.isMatchPhase
         }).$promise.then(function (result) {
             console.log(result);
             vm.show_result = true;
